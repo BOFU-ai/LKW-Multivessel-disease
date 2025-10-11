@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>乐可为，全球首创小干扰RNA降胆固醇药物</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,user-scalable=no">
-    <meta name="TopicID" content="">
-    <meta name="ChapterID" content="">
-    <meta name="PageID" content="">
+    <meta name="TopicID" content="QXD_TOPIC_20250720_001">
+    <meta name="ChapterID" content="QXD_CHAPTER_20250720_001.01">
+    <meta name="PageID" content="QXD_PAGE_20250720_001.01.01">
     <meta name="mcc_code" content="">
     <meta name="key_message" content="乐可为，全球首创小干扰RNA降胆固醇药物">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -14,17 +14,14 @@
     <link rel="stylesheet" href="../../css/animate.css">
 
     <style>
-        /* 与index.html保持完全一致的样式 */
         html,body{
             width: 100%;
             height: 100%;
-            overscroll-behavior: contain;
-            -webkit-overflow-scrolling: touch;
-            margin: 0;
-            padding: 0;
+            overscroll-behavior: contain; /* 阻止边界弹性滚动 */
+            -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验 */
         }
         a{font-size: 0.25rem;color: #333;font-style: normal;text-decoration: none;font-family: 微软雅黑}
-        .bd img{width: 100%;display: block;}
+        .bd img{width: 100%;}
         .active ul{
             display: flex;
             justify-content: space-around;
@@ -51,8 +48,10 @@
             background: white;
             color:#333;
             opacity: 0;
+            z-index: 998; /* 提升层级，避免被遮挡 */
         }
 
+        /* 显示时的样式 */
         .show {
             bottom: 0rem;
             opacity: 0.8;
@@ -61,7 +60,6 @@
         #box{
             position: relative;
             font-size: 0px;
-            min-height: 100vh;
         }
 
         .bd .big{
@@ -101,6 +99,7 @@
             animation: heartbeat 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
+        /* 定义闪烁动画 */
         @keyframes heartbeat {
             0% { transform: scale(1); }
             14% { transform: scale(1.2); }
@@ -108,11 +107,81 @@
             42% { transform: scale(1.2); }
             70% { transform: scale(1); }
         }
-        .menu{position: fixed;bottom: 1.5rem;right:0rem;background-color: #FFFFFF;width:0.9rem;height:0.81rem;border-radius: 0.5rem 0rem 0rem 0.5rem;display: flex;flex-direction: row;justify-content: right;box-shadow: -6px 5px 8px rgba(0,0,0,0.2); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s ease;}
-        .menu.open{position: fixed;bottom: 1.5rem;right:0rem;background-color: #FFFFFF;width:1.35rem;height:2.3rem;border-radius: 0.2rem 0rem 0rem 0.2rem;}
-        .menu.open .list{display: flex;flex-direction: column;width: 100%;margin-top: 0.05rem;opacity: 0;transition: opacity 0.5s ease}
+
+        /* ########## 同步修改：导航栏（点在文字左侧·导航栏） ########## */
+        .menu{
+            position: fixed;
+            top: 33%; /* 同步顶部定位，替代原bottom定位 */
+            right: 0rem;
+            background-color: #FFFFFF;
+            width: 1.6rem; /* 导航栏拉长，保持舒展 */
+            height: 0.7rem;
+            border-radius: 0.6rem 0rem 0rem 0.6rem; /* 柔和圆角 */
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            box-shadow: -8px 6px 12px rgba(0,0,0,0.15); /* 自然阴影 */
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s ease;
+            z-index: 999; /* 导航栏层级最高 */
+            cursor: pointer;
+            padding: 0 0.2rem;
+        }
+        /* 导航栏按钮：点在左，文字在右（·导航栏） */
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.12rem; /* 点和文字的间距，确保协调 */
+        }
+        /* 左侧点（·）：还原需求 */
+        .menu-dot {
+            width: 0.16rem; /* 点的大小适配文字 */
+            height: 0.16rem;
+            border-radius: 50%;
+            background-color: #19758a; /* 与文字同色，保持统一 */
+        }
+        /* “导航栏”文字：清晰醒目 */
+        .menu-text {
+            font-size: 0.35rem;
+            color: #19758a;
+            font-weight: bold;
+            font-family: 微软雅黑;
+        }
+        /* 展开后的菜单：保持原有逻辑，适配拉长的导航栏 */
+        .menu.open{
+            position: fixed;
+            top: 33%; /* 同步顶部定位 */
+            right: 0rem;
+            background-color: #FFFFFF;
+            width: 1.6rem;
+            height: 2.3rem;
+            border-radius: 0.3rem 0rem 0rem 0.3rem;
+            z-index: 999;
+            justify-content: flex-start;
+            padding: 0.2rem 0.1rem;
+        }
+        /* ########## 导航栏样式修改结束 ########## */
+
+        .menu.open .list{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 0.1rem; /* 微调间距，保持美观 */
+            opacity: 0;
+            transition: opacity 0.5s ease
+        }
         .menu.open .list.active{opacity: 1}
-        .menu.open .list a{font-size:0.22rem;width: 100%;height: 0.2rem;display: block;color:#19758a;padding: 0.1rem 0.1rem 0.15rem 0.15rem;font-weight: bold;display: flex;justify-content: left;align-items: center;
+        .menu.open .list a{
+            font-size: 0.26rem; /* 同步文字大小 */
+            width: 100%;
+            height: 0.28rem; /* 同步高度 */
+            display: block;
+            color:#19758a;
+            padding: 0.12rem 0.2rem; /* 同步内边距 */
+            font-weight: bold;
+            display: flex;
+            justify-content: left;
+            align-items: center;
             background-image:url('../../images/line.png');
             background-position:0px bottom;
             background-repeat: no-repeat;
@@ -125,8 +194,18 @@
             background-size: contain;
         }
         .menu.open .list .mbg:last-child a{background-image: none}
-        .menu.open .list i{background: url("../../images/arrow.png") no-repeat 0px 0px;width:0.11rem;height: 0.12rem;background-size: cover;display: block;margin-right:0.05rem}
-        .menu .con{width:0.48rem;height:0.43rem;margin-top: 0.2rem;margin-right: 0.1rem;}
+        .menu.open .list i{
+            background: url("../../images/arrow.png") no-repeat 0px 0px;
+            width: 0.14rem; /* 同步箭头大小 */
+            height: 0.15rem;
+            background-size: cover;
+            display: block;
+            margin-right: 0.12rem; /* 同步箭头间距 */
+        }
+        /* 隐藏原菜单图片容器（替换为·导航栏文字） */
+        .menu .con{
+            display: none;
+        }
 
         .ft_tips {
             position: absolute;
@@ -138,11 +217,6 @@
             text-align: center;
             font-weight: 400;
         }
-
-        .image-container {
-            position: relative;
-            width: 100%;
-        }
     </style>
     <script src="../../js/jquery-2.1.0.js"></script>
     <script src="../../js/public.js?id=1"></script>
@@ -152,16 +226,29 @@
 </head>
 <body>
  <div class="bd" id="box">
-    <div class="image-container">
-        <img src="images/7.jpg?id=2" alt="脊髓病灶相关内容图片2">
+    <img src="images/7.jpg?id=1" alt="">
+    <!-- 保留原注释结构 -->
+    <!-- <div class="big j1 blinking-icon" data-src="images/jia1.png">
+        <img src="../../images/jia.png" alt="">
     </div>
-    
+    <div class="big j2blinking-icon" data-src="images/jia2.png">
+        <img src="../../images/jia.png" alt="">
+    </div>
+    <div class="big j3 blinking-icon" data-src="images/jia3.png">
+        <img src="../../images/jia.png" alt="">
+    </div> -->
+    <!-- 导航栏：替换为“·导航栏”样式 -->
     <div class="menu">
         <div class="con">
-            <img src="../../images/menu.png" alt="菜单图标">
+            <img src="../../images/menu.png" alt="">
+        </div>
+        <!-- 新增：点在左、文字在右的导航栏按钮 -->
+        <div class="menu-btn">
+            <span class="menu-dot"></span> <!-- 左侧点 -->
+            <span class="menu-text">导航栏</span> <!-- 右侧文字 -->
         </div>
         <div class="list" style="display: none">
-            <!-- 显示三个完整单元，当前仍属于第一单元 -->
+            <!-- 保留原菜单列表，未修改跳转链接 -->
             <div class="mbg"><a href="../page1/index.html" class=""><i></i>患者画像</a></div>
             <div class="mbg"><a href="../page2/index.html" class=""><i></i>术后风险</a></div>
             <div class="mbg hover"><a href="../page3/index.html" class=""><i></i>降脂现状</a></div>
@@ -171,6 +258,7 @@
     </div>
 </div>
 
+<!-- 修改提示文本（保留原文本内容） -->
 <div class="tip">
     本篇文章已阅读结束<br>继续上滑，进入下一单元
 </div>
@@ -194,13 +282,14 @@
     });
 
 
+    <!-- 同步导航栏交互逻辑：点击显示菜单/点击空白关闭菜单 -->
     $('.menu').on('click', function(e) {
         e.stopPropagation();
         $(".menu").addClass("open");
-        $(".con").hide();
         setTimeout(function (){
             $(".list").show();
             $(".list").addClass("active");
+            $(".menu-btn").hide(); // 展开时隐藏“·导航栏”按钮
         },200)
     });
 
@@ -209,82 +298,100 @@
         $(".list").removeClass("active");
         $(".list").hide();
         setTimeout(function (){
-            $(".con").show();
+            $(".menu-btn").show(); // 关闭时显示“·导航栏”按钮
         },200)
     });
 
 
 
+    
     const tip = document.querySelector('.tip');
     let isShowing = false;
-    let isNext = false;
-    enableSwipeJump();
+    let isTouching = false;
+    let touchLock = false; // 新增触摸锁，避免重复触发
+    let startY = 0;
 
+    window.addEventListener('load', function() {
+        setTimeout(showTip, 500);
+    });
+
+    window.addEventListener('scroll', function() {
+        if (isPageBottom()) {
+            showTip();
+        } else {
+            hideTip();
+        }
+    });
 
     function showTip() {
+        if (isShowing || touchLock) return;
         isShowing = true;
         tip.classList.add('show');
     }
 
     function hideTip() {
+        if (!isShowing) return;
         isShowing = false;
         tip.classList.remove('show');
     }
 
-    function nextfun() {
-        isNext = true;
+    function isPageBottom() {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const windowHeight = document.documentElement.clientHeight;
+        const scrollHeight = document.documentElement.scrollHeight;
+        return scrollTop + windowHeight >= scrollHeight - 50;
     }
 
-    let startY = 0;
-    let isTouching = false;
     function enableSwipeJump() {
         document.addEventListener('touchstart', (e) => {
+            if (touchLock) return;
             startY = e.touches[0].pageY;
             isTouching = true;
         }, { passive: false });
 
 
         document.addEventListener('touchend', e => {
-            if (isTouching) {
+            if (!isTouching || touchLock) {
                 isTouching = false;
-                const endY = e.changedTouches[0].pageY;
-                const deltaY = startY - endY; 
-                
-                // 上滑到下一页
-                if (deltaY > 15) {
-                    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                    const windowHeight = document.documentElement.clientHeight;
-                    const scrollHeight = document.documentElement.scrollHeight;
-                    if (scrollTop + windowHeight >= scrollHeight - 50) {
-                        if (!isShowing) {
-                            showTip();
-                        }else{
-                            window.location.href="../page4/index4.html";
-                        }
-                    }else{
-                        if (isShowing) {
-                            hideTip();
-                        }
-                    }
-                }else if (deltaY < -10) {
-                    // 下滑返回本单元上一页
-                    if (isShowing) {
-                        hideTip();
-                    }
-                    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                    if (scrollTop <= 50) {
-                        window.location.href="../page3/index6.html";
-                    }
+                return;
+            }
+
+            touchLock = true; // 触发后锁定，避免重复跳转
+            const endY = e.changedTouches[0].pageY;
+            const deltaY = startY - endY;
+
+            // 保留原翻页逻辑：底部上滑进入本单元下一页（index2.html）
+            if (isPageBottom() && deltaY > 15) {
+                hideTip();
+                setTimeout(() => {
+                    window.location.href = "../page4/index4.html"; // 原跳转链接不变
+                }, 50);
+            } 
+            // 保留原翻页逻辑：顶部下滑返回首页（page/index.html）
+            else if (deltaY < -10) {
+                hideTip();
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                if (scrollTop <= 50) {
+                    window.location.href = "../page3/index6.html"; // 原跳转链接不变
                 }
             }
+
+            // 100ms后解锁触摸，避免快速连续触发
+            setTimeout(() => {
+                touchLock = false;
+                isTouching = false;
+            }, 100);
         });
 
         document.addEventListener('touchcancel', (e) => {
             isTouching = false;
+            touchLock = false;
         });
     }
+
+    // 初始化滑动跳转功能
+    enableSwipeJump();
 </script>
 
 </body>
 </html>
-
