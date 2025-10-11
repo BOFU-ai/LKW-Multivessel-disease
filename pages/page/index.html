@@ -106,69 +106,119 @@
             70% { transform: scale(1); }
         }
 
-        /* ########## 修正：点在文字左侧（·导航栏），导航栏拉长 ########## */
+        /* 导航栏基础样式 */
         .menu{
             position: fixed;
             top: 33%;
             right: 0rem;
             background-color: #FFFFFF;
-            width: 1.8rem; /* 导航栏拉长，保持舒展 */
-            height: 0.9rem;
-            border-radius: 0.6rem 0rem 0rem 0.6rem; /* 柔和圆角 */
+            width: 1.6rem;
+            height: 0.7rem;
+            border-radius: 0.6rem 0rem 0rem 0.6rem;
             display: flex;
-            align-items: center; /* 垂直居中 */
-            justify-content: center; /* 水平居中 */
-            box-shadow: -8px 6px 12px rgba(0,0,0,0.15); /* 自然阴影 */
+            align-items: center;
+            justify-content: center;
+            box-shadow: -8px 6px 12px rgba(0,0,0,0.15);
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s ease;
             z-index: 999;
             cursor: pointer;
             padding: 0 0.2rem;
         }
-        /* 导航栏按钮：点在左，文字在右（·导航栏） */
+        
+        /* 导航栏按钮：点在左，文字在右 */
         .menu-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.18rem; /* 点和文字的间距，确保协调 */
+            gap: 0.12rem;
         }
-        /* 左侧点（·）：还原需求 */
+        
         .menu-dot {
-            width: 0.16rem; /* 点的大小适配文字 */
+            width: 0.16rem;
             height: 0.16rem;
             border-radius: 50%;
-            background-color: #19758a; /* 与文字同色，保持统一 */
+            background-color: #19758a;
         }
-        /* “导航栏”文字：清晰醒目 */
+        
         .menu-text {
             font-size: 0.35rem;
             color: #19758a;
             font-weight: bold;
             font-family: 微软雅黑;
         }
-        /* 展开后的菜单：保持原有逻辑，适配拉长的导航栏 */
+
+        /* ########## 新增：展开弹动效果 ########## */
         .menu.open{
             position: fixed;
-            top: 30%;
+            top: 33%;
             right: 0rem;
             background-color: #FFFFFF;
-            width: 1.9rem;
-            height: 2.5rem;
+            width: 1.6rem;
+            height: 2.3rem;
             border-radius: 0.3rem 0rem 0rem 0.3rem;
             z-index: 999;
             justify-content: flex-start;
             padding: 0.2rem 0.1rem;
+            /* 弹动动画 */
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* ########## 修正结束 ########## */
 
+        /* 定义弹动动画 */
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.8) translateX(10px);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.05) translateX(-2px);
+            }
+            100% {
+                transform: scale(1) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* 菜单项渐入效果 */
         .menu.open .list{
             display: flex;
             flex-direction: column;
             width: 100%;
             margin-top: 0.1rem;
             opacity: 0;
-            transition: opacity 0.5s ease
+            transition: opacity 0.5s ease;
         }
-        .menu.open .list.active{opacity: 1}
+        
+        .menu.open .list.active{
+            opacity: 1;
+            /* 菜单项依次出现 */
+            animation: fadeIn 0.6s forwards;
+        }
+
+        /* 菜单项逐个显示动画 */
+        .menu.open .list .mbg {
+            opacity: 0;
+            transform: translateX(10px);
+            animation: itemSlideIn 0.3s forwards;
+            animation-delay: calc(var(--index) * 0.1s);
+        }
+
+        @keyframes itemSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* ########## 弹动效果结束 ########## */
+
         .menu.open .list a{
             font-size: 0.26rem;
             width: 100%;
@@ -200,7 +250,6 @@
             display: block;
             margin-right: 0.12rem;
         }
-        /* 隐藏原图片容器 */
         .menu .con{
             display: none;
         }
@@ -225,36 +274,26 @@
 <body>
  <div class="bd" id="box">
     <img src="images/1.jpg?id=1" alt="">
-    <!-- 保留原注释结构 -->
-    <!-- <div class="big j1 blinking-icon" data-src="images/jia1.png">
-        <img src="../../images/jia.png" alt="">
-    </div>
-    <div class="big j2blinking-icon" data-src="images/jia2.png">
-        <img src="../../images/jia.png" alt="">
-    </div>
-    <div class="big j3 blinking-icon" data-src="images/jia3.png">
-        <img src="../../images/jia.png" alt="">
-    </div> -->
-    <!-- 导航栏：点在文字左侧（·导航栏） -->
+    <!-- 导航栏：点在左，文字在右 -->
     <div class="menu">
         <div class="con">
             <img src="../../images/menu.png" alt="">
         </div>
         <div class="menu-btn">
-            <span class="menu-dot"></span> <!-- 点在左 -->
-            <span class="menu-text">导航栏</span> <!-- 文字在右 -->
+            <span class="menu-dot"></span>
+            <span class="menu-text">导航栏</span>
         </div>
         <div class="list" style="display: none">
-            <div class="mbg"><a href="../page1/index.html" class=""><i></i>患者画像</a></div>
-            <div class="mbg"><a href="../page2/index.html" class=""><i></i>术后风险</a></div>
-            <div class="mbg"><a href="../page3/index.html" class=""><i></i>降脂现状</a></div>
-            <div class="mbg"><a href="../page4/index.html" class=""><i></i>全新优选</a></div>
-            <div class="mbg"><a href="../page5/index.html" class=""><i></i>简明处方</a></div>
+            <!-- 为每个菜单项添加索引，用于动画延迟 -->
+            <div class="mbg" style="--index: 0"><a href="../page1/index.html" class=""><i></i>患者画像</a></div>
+            <div class="mbg" style="--index: 1"><a href="../page2/index.html" class=""><i></i>术后风险</a></div>
+            <div class="mbg" style="--index: 2"><a href="../page3/index.html" class=""><i></i>降脂现状</a></div>
+            <div class="mbg" style="--index: 3"><a href="../page4/index.html" class=""><i></i>全新优选</a></div>
+            <div class="mbg" style="--index: 4"><a href="../page5/index.html" class=""><i></i>简明处方</a></div>
         </div>
     </div>
 </div>
 
-<!-- 修改提示文本 -->
 <div class="tip">
     继续上滑，进入本单元下一页
 </div>
@@ -278,14 +317,13 @@
     });
 
 
-    <!-- 导航栏交互逻辑不变 -->
     $('.menu').on('click', function(e) {
         e.stopPropagation();
         $(".menu").addClass("open");
         setTimeout(function (){
             $(".list").show();
             $(".list").addClass("active");
-            $(".menu-btn").hide(); // 展开时隐藏“·导航栏”
+            $(".menu-btn").hide();
         },200)
     });
 
@@ -294,13 +332,13 @@
         $(".list").removeClass("active");
         $(".list").hide();
         setTimeout(function (){
-            $(".menu-btn").show(); // 关闭时显示“·导航栏”
+            $(".menu-btn").show();
         },200)
     });
 
 
 
-    <!-- 滑动逻辑不变（原生滚动+底部跳转） -->
+    <!-- 滑动逻辑保持不变 -->
     const tip = document.querySelector('.tip');
     let isShowing = false;
     let isTouching = false;
