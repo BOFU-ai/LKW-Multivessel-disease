@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>乐可为，全球首创小干扰RNA降胆固醇药物</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,user-scalable=no">
-    <meta name="TopicID" content="QXD_TOPIC_20250720_001">
-    <meta name="ChapterID" content="QXD_CHAPTER_20250720_001.01">
-    <meta name="PageID" content="QXD_PAGE_20250720_001.01.01">
+    <meta name="TopicID" content="">
+    <meta name="ChapterID" content="">
+    <meta name="PageID" content="">
     <meta name="mcc_code" content="">
     <meta name="key_message" content="乐可为，全球首创小干扰RNA降胆固醇药物">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -19,6 +19,7 @@
             height: 100%;
             overscroll-behavior: contain; /* 阻止边界弹性滚动 */
             -webkit-overflow-scrolling: touch; /* 优化iOS滚动体验 */
+            overflow: hidden; /* 关键：禁止页面原生滚动，避免滑动冲突 */
         }
         a{font-size: 0.25rem;color: #333;font-style: normal;text-decoration: none;font-family: 微软雅黑}
         .bd img{width: 100%;}
@@ -165,15 +166,15 @@
             <div class="mbg"><a href="../page1/index.html" class=""><i></i>患者画像</a></div>
             <div class="mbg"><a href="../page2/index.html" class=""><i></i>术后风险</a></div>
             <div class="mbg"><a href="../page3/index.html" class=""><i></i>降脂现状</a></div>
-            <div class="mbg"><a href="../page4/index4.html" class=""><i></i>全新优选</a></div>
-            <div class="mbg"><a href="../page5/index8.html" class=""><i></i>简明处方</a></div>
+            <div class="mbg"><a href="../page4/index.html" class=""><i></i>全新优选</a></div>
+            <div class="mbg"><a href="../page5/index.html" class=""><i></i>简明处方</a></div>
         </div>
     </div>
 </div>
 
 <!-- 修改提示文本 -->
 <div class="tip">
-    本页已阅读结束<br>继续上滑，进入患者信息单元
+    继续上滑，进入本单元下一页
 </div>
 <script>
     const modal = new ImageModal({
@@ -219,71 +220,81 @@
     // 获取提示框元素
     const tip = document.querySelector('.tip');
     let isShowing = false;
-    let isNext = false;
-    enableSwipeJump();
+    let isTouching = false;
+    let touchLock = false; // 滑动锁：防止单次触摸触发多次跳转
 
+    // 页面加载完成后自动显示提示框，引导用户滑动
+    window.addEventListener('load', function() {
+        setTimeout(showTip, 500); // 延迟0.5秒显示，避免刚进入页面就弹窗
+    });
 
     // 显示提示
     function showTip() {
+        if (isShowing) return;
         isShowing = true;
         tip.classList.add('show');
+        // 提示框显示3秒后自动隐藏，避免长期遮挡
+        setTimeout(hideTip, 3000);
     }
 
     // 隐藏提示
     function hideTip() {
+        if (!isShowing) return;
         isShowing = false;
         tip.classList.remove('show');
     }
 
-    function nextfun() {
-        isNext = true;
-    }
-
-    let startY = 0;
-    let isTouching = false;
+    // 核心：简化滑动逻辑，单次上滑直接跳转
     function enableSwipeJump() {
+        // 触摸开始：记录初始位置
         document.addEventListener('touchstart', (e) => {
+            if (touchLock) return; // 若正在处理滑动，忽略新触摸
             startY = e.touches[0].pageY;
             isTouching = true;
         }, { passive: false });
 
 
+        // 触摸结束：判断滑动方向和距离，触发跳转
         document.addEventListener('touchend', e => {
-            if (isTouching) {
+            if (!isTouching || touchLock) {
                 isTouching = false;
-                const endY = e.changedTouches[0].pageY;
-                const deltaY = startY - endY; 
-                
-                // 上滑逻辑：第一页上滑到下一单元
-                if (deltaY > 15) {
-                    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                    const windowHeight = document.documentElement.clientHeight;
-                    const scrollHeight = document.documentElement.scrollHeight;
-                    if (scrollTop + windowHeight >= scrollHeight - 50) {
-                        if (!isShowing) {
-                            showTip();
-                        }else{
-                            // 跳转到下一单元
-                            window.location.href="../page1/index.html";
-                        }
-                    }else{
-                        if (isShowing) {
-                            hideTip();
-                        }
-                    }
-                }else if (deltaY < -10) {
-                    // 下滑逻辑：第一页顶部下滑不跳转（保持在本单元）
-                    if (isShowing) {
-                        hideTip();
-                    }
-                }
+                return;
             }
+
+            touchLock = true; // 锁定滑动，防止多次触发
+            const endY = e.changedTouches[0].pageY;
+            const deltaY = startY - endY; // 上滑：deltaY为正；下滑：deltaY为负
+            
+            // 关键优化1：上滑距离超过15px（可根据需求调整），直接跳转
+            if (deltaY > 15) {
+                // 隐藏提示框，执行跳转
+                hideTip();
+                // 延迟50ms跳转，让触摸反馈更流畅
+                setTimeout(() => {
+                    window.location.href = "../page1/index.html"; // 目标页面路径
+                }, 50);
+            } 
+            // 关键优化2：下滑时隐藏提示框（若显示）
+            else if (deltaY < -10) {
+                hideTip();
+            }
+
+            // 解锁滑动（延迟100ms，避免快速连续触摸）
+            setTimeout(() => {
+                touchLock = false;
+                isTouching = false;
+            }, 100);
         });
 
+        // 触摸中断：解锁状态
         document.addEventListener('touchcancel', (e) => {
             isTouching = false;
+            touchLock = false;
         });
     }
+
+    // 初始化滑动功能
+    enableSwipeJump();
 </script>
 
 </body>
