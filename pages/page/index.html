@@ -109,11 +109,11 @@
         /* ########## 修正：点在文字左侧（·导航栏），导航栏拉长 ########## */
         .menu{
             position: fixed;
-            top: 33%;
+            top: 30%;
             right: 0rem;
             background-color: #FFFFFF;
-            width: 1.6rem; /* 导航栏拉长，保持舒展 */
-            height: 0.7rem;
+            width: 1.2rem; /* 导航栏拉长，保持舒展 */
+            height: 0.5rem;
             border-radius: 0.6rem 0rem 0rem 0.6rem; /* 柔和圆角 */
             display: flex;
             align-items: center; /* 垂直居中 */
@@ -133,14 +133,14 @@
         }
         /* 左侧点（·）：还原需求 */
         .menu-dot {
-            width: 0.16rem; /* 点的大小适配文字 */
-            height: 0.16rem;
+            width: 0.12rem; /* 点的大小适配文字 */
+            height: 0.12rem;
             border-radius: 50%;
             background-color: #19758a; /* 与文字同色，保持统一 */
         }
         /* “导航栏”文字：清晰醒目 */
         .menu-text {
-            font-size: 0.35rem;
+            font-size: 0.28rem;
             color: #19758a;
             font-weight: bold;
             font-family: 微软雅黑;
@@ -148,10 +148,10 @@
         /* 展开后的菜单：保持原有逻辑，适配拉长的导航栏 */
         .menu.open{
             position: fixed;
-            top: 33%;
+            top: 30%;
             right: 0rem;
             background-color: #FFFFFF;
-            width: 1.6rem;
+            width: 1.2rem;
             height: 2.3rem;
             border-radius: 0.3rem 0rem 0rem 0.3rem;
             z-index: 999;
