@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>乐可为，全球首创小干扰RNA降胆固醇药物</title>
+    <title>支架数≥2或多支病变的PCI术后患者风险显著增加</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,user-scalable=no">
-    <meta name="TopicID" content="QXD_TOPIC_20250720_001">
-    <meta name="ChapterID" content="QXD_CHAPTER_20250720_001.01">
-    <meta name="PageID" content="QXD_PAGE_20250720_001.01.01">
+    <meta name="TopicID" content="DZBB_TOPIC_20251015_001">
+    <meta name="ChapterID" content="DZBB_CHAPTER_20251015_001.03">
+    <meta name="PageID" content="DZBB_PAGE_20251015_001.03.03">
     <meta name="mcc_code" content="">
-    <meta name="key_message" content="乐可为，全球首创小干扰RNA降胆固醇药物">
+    <meta name="key_message" content="支架数≥2或多支病变的PCI术后患者风险显著增加">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/toast.css">
     <link rel="stylesheet" href="../../css/animate.css">
@@ -108,14 +108,13 @@
             70% { transform: scale(1); }
         }
 
-        /* ########## 同步修改：导航栏（点在文字左侧·导航栏） ########## */
         .menu{
-            position: fixed;
+            position: absolute;
             top: 33%; /* 同步顶部定位，替代原bottom定位 */
             right: 0rem;
             background-color: #FFFFFF;
             width: 1.6rem; /* 导航栏拉长，保持舒展 */
-            height: 0.7rem;
+            height: 0.5rem;
             border-radius: 0.6rem 0rem 0rem 0.6rem; /* 柔和圆角 */
             display: flex;
             align-items: center; /* 垂直居中 */
@@ -135,21 +134,21 @@
         }
         /* 左侧点（·）：还原需求 */
         .menu-dot {
-            width: 0.16rem; /* 点的大小适配文字 */
-            height: 0.16rem;
+            width: 0.12rem; /* 点的大小适配文字 */
+            height: 0.12rem;
             border-radius: 50%;
             background-color: #19758a; /* 与文字同色，保持统一 */
         }
         /* “导航栏”文字：清晰醒目 */
         .menu-text {
-            font-size: 0.35rem;
+            font-size: 0.28rem;
             color: #19758a;
             font-weight: bold;
             font-family: 微软雅黑;
         }
         /* 展开后的菜单：保持原有逻辑，适配拉长的导航栏 */
         .menu.open{
-            position: fixed;
+            position: absolute;
             top: 33%; /* 同步顶部定位 */
             right: 0rem;
             background-color: #FFFFFF;
@@ -160,7 +159,6 @@
             justify-content: flex-start;
             padding: 0.2rem 0.1rem;
         }
-        /* ########## 导航栏样式修改结束 ########## */
 
         .menu.open .list{
             display: flex;
@@ -222,21 +220,12 @@
     <script src="../../js/public.js?id=1"></script>
     <script src="../../js/toast.js"></script>
     <script src="../../js/image-modal.js?id=2"></script>
-    <script src="https://qa.wecomfoundation.novartis.com.cn/content-lib/static/behaviorTracking.js"></script>
+    <script src="https://wecomfoundation.novartis.com.cn/content-lib/static/behaviorTracking_prd.js"></script>
 </head>
 <body>
  <div class="bd" id="box">
     <img src="images/3.jpg?id=1" alt="">
-    <!-- 保留原注释结构 -->
-    <!-- <div class="big j1 blinking-icon" data-src="images/jia1.png">
-        <img src="../../images/jia.png" alt="">
-    </div>
-    <div class="big j2blinking-icon" data-src="images/jia2.png">
-        <img src="../../images/jia.png" alt="">
-    </div>
-    <div class="big j3 blinking-icon" data-src="images/jia3.png">
-        <img src="../../images/jia.png" alt="">
-    </div> -->
+   
     <!-- 导航栏：替换为“·导航栏”样式 -->
     <div class="menu">
         <div class="con">
@@ -248,17 +237,17 @@
             <span class="menu-text">导航栏</span> <!-- 右侧文字 -->
         </div>
         <div class="list" style="display: none">
-            <!-- 保留原菜单列表，未修改跳转链接 -->
+            
             <div class="mbg"><a href="../page1/index.html" class=""><i></i>患者画像</a></div>
             <div class="mbg hover"><a href="../page2/index.html" class=""><i></i>术后风险</a></div>
             <div class="mbg"><a href="../page3/index.html" class=""><i></i>降脂现状</a></div>
-            <div class="mbg"><a href="../page4/index4.html" class=""><i></i>全新优选</a></div>
-            <div class="mbg"><a href="../page5/index8.html" class=""><i></i>简明处方</a></div>
+            <div class="mbg"><a href="../page4/index.html" class=""><i></i>全新优选</a></div>
+            <div class="mbg"><a href="../page5/index.html" class=""><i></i>简明处方</a></div>
         </div>
     </div>
 </div>
 
-<!-- 修改提示文本（保留原文本内容） -->
+<!-- 修改提示文本 -->
 <div class="tip">
     本篇文章已阅读结束<br>继续上滑，进入下一单元
 </div>
@@ -360,19 +349,19 @@
             const endY = e.changedTouches[0].pageY;
             const deltaY = startY - endY;
 
-            // 保留原翻页逻辑：底部上滑进入本单元下一页（index2.html）
+            // 翻页逻辑：底部上滑进入下一单元（page3/index.html）
             if (isPageBottom() && deltaY > 15) {
                 hideTip();
                 setTimeout(() => {
-                    window.location.href = "../page3/index.html"; // 原跳转链接不变
+                    window.location.href = "../page3/index.html";  
                 }, 50);
             } 
-            // 保留原翻页逻辑：顶部下滑返回首页（page/index.html）
+            // 翻页逻辑：顶部下滑返回上一页（index2.html）
             else if (deltaY < -10) {
                 hideTip();
                 const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 if (scrollTop <= 50) {
-                    window.location.href = "../page2/index2.html"; // 原跳转链接不变
+                    window.location.href = "../page2/index2.html";  
                 }
             }
 
